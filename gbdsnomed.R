@@ -63,10 +63,13 @@ GET(url3, write_disk(tf <- tempfile(fileext = ".zip")))
 unzip(zipfile=tf, files = "/Documentation/tls_Icd10cmHumanReadableMap_US1000124_20190301.tsv", exdir=".")
 snomed <- read_tsv("tls_Icd10cmHumanReadableMap_US1000124_20190301.tsv")
 
-test = snomed %>%
+gbdtosnomed = snomed %>%
   mutate(mapTarget= decimal_to_short(mapTarget),
          mapTarget = as.character(mapTarget)) %>%
   inner_join(gbdtoicdlink)
+
+write_delim(gbdtoicdlink,"gbdtoicdlink.csv")
+
 
 
 
